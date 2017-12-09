@@ -162,14 +162,31 @@ Avec moins de 50 itérations, le réseau de neurone est capable d'atteindre une 
 	\caption{Précision et Erreur sur les ensembles d'apprentissage et de validation\label{tab1}}
 \end{table}
 
+Les résultats sont assez bons pour un réseau de neurones à architecture simple.
+
+\vspace{5em}
+
 Les courbes d'apprentissages sont les suivantes:
 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth,keepaspectratio]{Error}
-	\caption{Sample image\label{img1}}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\textwidth]{Error}
+		\caption{Erreur}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\textwidth]{accuracy}
+		\caption{Précision}
+	\end{subfigure}
+	\caption{Précision et erreur sur les ensembles d'apprentissage et de validation}
 \end{figure}
+
+Nous remarquons que l'erreur sur les ensembles d'apprentissage et de validation diminue efficacement au fil des itérations, puis commence à se stabiliser à la fin lorsque on se trouve dans un optimium local.
+
+Nous remarquons que même sans utiliser la régularisation, le modèle ne souffre pas de sur apprentissage, vu que la courbe d'erreur sur l'ensemble de validation ne diverge pas de celle de l'ensemble d'apprentissage.
+
+Quant à la précision, nous remarquons qu'elle est en train d'augmenter pour les deux ensembles, jusqu'à ce qu'elle se stabilise aux dernières itérations.
 
 
 \section{Conclusion}
