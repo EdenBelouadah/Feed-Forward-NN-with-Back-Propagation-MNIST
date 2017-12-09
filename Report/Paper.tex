@@ -163,9 +163,7 @@ Trois fonctions d'activations ont été testées:
 		$$ tanh'(x)=1-tanh^2(x)$$
 \end{itemize}
 
-La fonction d'activation finale utilisée est la fonction $relu$. Les deux fonctions $sigmoid$ et $tanh$ n'ont pas donné les meilleurs résultats. En effet, nous remarquons que lorsque les dérivées sont très petites, les deux fonctions $sigmoid$ et $tanh$ ne deviennent plus efficaces et l'effet du gradient disparait. 
-
-
+La fonction d'activation finale utilisée est la fonction $relu$. Les deux fonctions $sigmoid$ et $tanh$ n'ont pas donné les meilleurs résultats surtout en augmentant le nombre de couches cachées. En effet, nous remarquons que lorsque les dérivées sont très petites, les deux fonctions $sigmoid$ et $tanh$ ne deviennent plus efficaces et l'effet du gradient disparait. 
 
 \section{Architecture du réseau de neurones}
 L'architecture du réseau de neurones utilisée est la suivante: 
@@ -177,17 +175,17 @@ L'architecture du réseau de neurones utilisée est la suivante:
 	\item Taille de Batch: 500.
 \end{itemize}
 
-Le pas d'apprentissage $\eta$ est initialisé au début à 0.001 et  changera de valeur dynamiquement selon la valeur d'erreur qu'on cherche à optimiser. Si l'erreur diminue, on augmente le pas d'apprentissage par 20\%, et si elle augmente, on retourne aux valeurs précédentes de W et de B et on diminue le pas d'apprentissage par 20\%.
+L'instabilité numérique de la fonction $relu$ par rapport aux deux autres fonctions nous mène à adapter le taux d'apprentissage au fur et à mesure des itérations, En effet, $\eta$ est initialisé au début à 0.001 et  changera de valeur dynamiquement selon la valeur d'erreur qu'on cherche à optimiser. Si l'erreur diminue, on augmente le pas d'apprentissage par 20\%, et si elle augmente, on retourne aux valeurs précédentes de W et de B et on diminue le pas d'apprentissage par 20\%.
 
 \section{Analyse des résultats}
-Avec moins de 50 itérations, le réseau de neurone est capable d'atteindre une précision de 86\%.  Les résultats sont les suivants:
+Avec moins de 45 itérations et en un temps réduit, le réseau de neurones est capable d'atteindre une précision de 86\%. Cela n'empêche pas d'avoir un meilleure précision, mais le temps d'exécution augmentera en compliquant l'architecture du réseau. Les résultats sont les suivants:
 
 \begin{table}[H]\centering
 	\begin{tabular}{ccccccc}
 		\toprule \textbf{Ensemble} & \textbf{Précision} & \textbf{Erreur}\\    \midrule
-		\textbf{Apprentissage} & 84.26\% & 0.51
+		\textbf{Apprentissage} & 85.89\% & 0.49
 		\\    \midrule
-		\textbf{Validation} & 86.01\% & 0.47  \\   
+		\textbf{Validation} & 86.93\% & 0.45  \\   
 		\bottomrule	
 	\end{tabular}
 	\caption{Précision et Erreur sur les ensembles d'apprentissage et de validation\label{tab1}}
@@ -195,9 +193,9 @@ Avec moins de 50 itérations, le réseau de neurone est capable d'atteindre une 
 
 Les résultats sont assez bons pour un réseau de neurones à architecture simple.
 
-\vspace{5em}
+\vspace{20em}
 
-Les courbes d'apprentissages sont les suivantes:
+Les courbes d'apprentissage sont les suivantes:
 
 \begin{figure}[H]
 	\centering
