@@ -121,20 +121,51 @@ La base de données MNIST est contruite de 50000 exemples d'images binaires num�
 \section{Apprentissage du réseau de neurones}
 Afin de faire cette tâche, il a fallu implémenter ces fonctions:
 \begin{itemize}
-	\item Forward: Faire le calcul matriciel nécessaire pour propager les données sur le réseau de neurones à partir de la couche d'entrée jusqu'à la couche de sortie,
+	\item Forward: Faire le calcul matriciel nécessaire pour propager les données sur le réseau de neurones à partir de la couche d'entrée jusqu'à la couche de sortie. La fonction, au plus des activations, fait sortir la dérivé de chaque activation.
+	
+	$$z_j = \sum_{i \rightarrow j} W_{ij} x_i + b_j$$
+	
 	\item Softmax: Prendre les activations de la couche de sortie et les transformer en une probabilité d'appartenance des exemples aux différentes classes,
-	\item ComputeLoss: Calculer l'erreur et la précision du réseau de neurones en comparant les sorties du réseau avec les vrais classes des exemples,
-	\item BackPropagation: Rétropropagation de l'erreur sur le réseau à partir de la couche de sortie jusqu'à la première couche cachée,
-	\item UpdateParmeters: Mettre à jour les paramètres du réseau de neurones (les poids W et les biais B)
+	
+	$$ \sigma_i = P(t=i|x,W,b) = \frac{e^{z_i-\alpha}}{\sum_k e^{z_k-\alpha}} ; \alpha=max(z_k)$$
+	
+	La stabilité de $Softmax$ a été testée. La fonction ne cause pas de débordement si la valeur d'activation est très grande.
+	
+	\item Calcul du gradient: Se fait de cette manière:	
+		$$\delta z_i = \sigma_i - 1_{i=l}$$	
+		
+	\item BackPropagation: Rétropropagation de l'erreur sur le réseau à partir de la couche de sortie jusqu'à la première couche cachée et mise à jour des paramètres (W, B) du réseau,
+		$$\delta^{(l-1)}=f'^{(l-1)}(a^{(l-1)}) \circ (W^{(l)^t}\delta^{(l)})$$
+		
+		$$W^{(l)}=W^{(l)}-\eta_t \delta^{(l)} x^{(l)^t}$$		
+	\item Calcul d'erreur: Calculer l'erreur et la précision du réseau de neurones en comparant les sorties du réseau avec les vrais classes des exemples,
+	
+	$$c = - \sum_{(x_{i}, y_{i}) \in \mathcal{D}} \log P(y=y_{i}|x_{i},W,b)$$
+	
 \end{itemize}
 
-La fonction d'activation utilisée pour les couches cachées est ReLU donnée par la formule suivante:
+Trois fonctions d'activations ont été testées:
 
-$$
-ReLU(x)=max(x,0)
-$$ 
+\begin{itemize}
+	\item Fonction $relu$:	
+		$$relu(x)=max(x,0)$$		
+		\begin{equation}
+		relu'(x) = \left\{ \begin{array}{rcl}
+		{1} & \mbox{si}
+		& x>0 \\ 0 & \mbox{sinon}
+		\end{array}\right.\label{eq2}
+		\end{equation}
+	\item Fonction $sigmoid$:
+		$$ sigmoid(x) = \frac{1}{1 + e^{-x}}$$
+		$$sigmoid'(x)=sigmoid(x)(1-sigmoid(x))$$
+	\item  Fonction $tanh$:	
+		$$ tanh(x) = \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}}$$
+		$$ tanh'(x)=1-tanh^2(x)$$
+\end{itemize}
 
-Les deux fonctions $sigmoid$ et $tanh$ ont été utilisées mais n'ont pas donné les meilleurs résultats. En effet, nous remarquons que lorsque les dérivées sont très petites, les deux fonctions $sigmoid$ et $tanh$ ne deviennent plus efficaces et l'effet du gradient disparait. 
+La fonction d'activation finale utilisée est la fonction $relu$. Les deux fonctions $sigmoid$ et $tanh$ n'ont pas donné les meilleurs résultats. En effet, nous remarquons que lorsque les dérivées sont très petites, les deux fonctions $sigmoid$ et $tanh$ ne deviennent plus efficaces et l'effet du gradient disparait. 
+
+
 
 \section{Architecture du réseau de neurones}
 L'architecture du réseau de neurones utilisée est la suivante: 
@@ -167,7 +198,6 @@ Les résultats sont assez bons pour un réseau de neurones à architecture simpl
 \vspace{5em}
 
 Les courbes d'apprentissages sont les suivantes:
-
 
 \begin{figure}[H]
 	\centering
