@@ -114,22 +114,55 @@ pdfdisplaydoctitle=true]{hyperref} % Pour les liens
 \section{Introduction}
 Le domaine d'apprentissage profond est l'un des domaines les plus récents qui s'inspirent du domaine biomédical. Il trouve des applications dans plein de problématiques réelles parmi lesquelles la classification d'image. 
 
-Le but de ce travail pratique est de mettre en oeuvre un réseau de neurones Feed Forward avec la rétropropagation de l'erreur, et l'appliquer sur la base de données MNIST.
+Le but de ce travail pratique est de mettre en œuvre un réseau de neurones Feed Forward avec la rétropropagation de l'erreur, et de l'appliquer sur la base de données MNIST.
 
-La base de données MNIST est contruite de 50000 exemple d'images binaires numérisées. Chaque image contient un chiffre manuscrit et le but du réseau est d'associer l'image au bon chiffre correspondant parmi 10. 
+La base de données MNIST est contruite de 50000 exemples d'images binaires numérisées. Chaque image contient un chiffre manuscrit et le but du réseau est d'associer l'image au bon chiffre correspondant parmi 10. 
 
-
-\section{Meilleure architecture du réseau de neurones}
-La meilleure architecture obtenue pour ce réseau de neurone est la suivante: 
+\section{Apprentissage du réseau de neurones}
+Afin de faire cette tâche, il a fallu implémenter ces fonctions:
 \begin{itemize}
-	\item Nombre de couches cachées: 1,
-	\item Nombre de neurones dans chaque couche cachée: 20,
-	\item Fonction d'activation : ReLU,
-	\item Erreur: Quadratique.
+	\item Forward: Faire le calcul matriciel nécessaire pour propager les données sur le réseau de neurones à partir de la couche d'entrée jusqu'à la couche de sortie,
+	\item Softmax: Prendre les activations de la couche de sortie et les transformer en une probabilité d'appartenance des exemples aux différentes classes,
+	\item ComputeLoss: Calculer l'erreur et la précision du réseau de neurones en comparant les sorties du réseau avec les vrais classes des exemples,
+	\item BackPropagation: Rétropropagation de l'erreur sur le réseau à partir de la couche de sortie jusqu'à la première couche cachée,
+	\item UpdateParmeters: Mettre à jour les paramètres du réseau de neurones (les poids W et les biais B)
 \end{itemize}
 
+La fonction d'activation utilisée pour les couches cachées est ReLU donnée par la formule suivante:
+
+$$
+ReLU(x)=max(x,0)
+$$ 
+
+Les deux fonctions $sigmoid$ et $tanh$ ont été utilisées mais n'ont pas donné les meilleurs résultats. En effet, nous remarquons que lorsque les dérivées sont très petites, les deux fonctions $sigmoid$ et $tanh$ ne deviennent plus efficaces et l'effet du gradient disparait. 
+
+\section{Architecture du réseau de neurones}
+L'architecture du réseau de neurones utilisée est la suivante: 
+\begin{itemize}
+	\item Nombre de couches cachées: 1,
+	\item Nombre de neurones dans la couche cachée: 300,
+	\item Fonction d'activation : ReLU,
+	\item Erreur: Quadratique,
+	\item Taille de Batch: 500.
+\end{itemize}
+
+Le pas d'apprentissage $\eta$ est initialisé au début à 0.001 et  changera de valeur dynamiquement selon la valeur d'erreur qu'on cherche à optimiser. Si l'erreur diminue, on augmente le pas d'apprentissage par 20\%, et si elle augmente, on retourne aux valeurs précédentes de W et de B et on diminue le pas d'apprentissage par 20\%.
+
 \section{Analyse des résultats}
-Nous remarquons que lorsque les dérivées sont très petites, les deux fonctions $sigmoid$ et $tanh$ ne deviennent plus efficaces et l'effet du gradient disparait. Donc la fonction ReLU reste le meilleur choix pour ce problème.
+Avec moins de 50 itérations, le réseau de neurone est capable d'atteindre une précision de 86\%.  Les résultats sont les suivants:
+
+\begin{table}[H]\centering
+	\begin{tabular}{ccccccc}
+		\toprule \textbf{Ensemble} & \textbf{Précision} & \textbf{Erreur}\\    \midrule
+		\textbf{Apprentissage} & 84.26\% & 0.51
+		\\    \midrule
+		\textbf{Validation} & 86.01\% & 0.47  \\   
+		\bottomrule	
+	\end{tabular}
+	\caption{Précision et Erreur sur les ensembles d'apprentissage et de validation\label{tab1}}
+\end{table}
+
+Les courbes d'apprentissages sont les suivantes:
 
 
 \begin{figure}[H]
@@ -138,30 +171,13 @@ Nous remarquons que lorsque les dérivées sont très petites, les deux fonction
 	\caption{Sample image\label{img1}}
 \end{figure}
 
-\begin{table}[H]\centering
-	\begin{tabular}{ccccccc}
-		\toprule \textbf{Architecture} & 1 & 2 & 3 & 4 & 5\\    \midrule
-		\textbf{Taux de précision} & 100\% & 97.5\% & 92.06\% & 89.66\% & 89.19\%  
-		\\    \midrule
-		\textbf{Taux d'erreur} & 100\% & 97.5\% & 92.06\% & 89.66\% & 89.19\% \\   
-		\bottomrule	
-	\end{tabular}
-	\caption{Précision et Erreur en fonction d'architecture\label{tab1}}
-\end{table}
-
-\begin{itemize}
-	\item Architecture1:,
-	\item Architecture2:,
-	\item Architecture3:,
-	\item Architecture4:.
-\end{itemize}
 
 \section{Conclusion}
 Ce travail pratique était une occasion pour voir de plus proche le fonctionnement des réseaux de neurones. Ces derniers peuvent changer d'architecture en variant le type du problème, sa difficulté, ses particularités... 
 
-La base de données MNIST représente une tâche de classification simple qui peut être résolue avec un réseau de neurone simple, même sans couches cachées, comme nous l'avons vu dans le travail pratique précédent. En effet, il était possible d'atteindre une précision de 87\% facilement et en peu de temps.
+La base de données MNIST représente une tâche de classification simple qui peut être résolue avec un réseau de neurone simple, même sans couches cachées, comme nous l'avons vu dans le travail pratique précédent. En effet, il était possible d'atteindre une précision de 87\% facilement et en un peu de temps.
 
-Les architectures complexes sont plus adaptées aux problèmes complexes qui nécessitent vraiment un réseau profond.
+Les architectures complexes sont plus adaptées aux problèmes complexes qui nécessitent vraiment un réseau profond, c'est la raison pour laquelle on s'est contenté d'une seule couche cachée dans ce travail.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \bibliographystyle{babplain}
 \parskip=-1em
