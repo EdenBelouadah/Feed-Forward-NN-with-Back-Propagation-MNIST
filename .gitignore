@@ -4,4 +4,6 @@ __pycache__/
 *.aux
 *.out
 *.txt
-*.synctex
+*.synctex.gz
+*.log
+
