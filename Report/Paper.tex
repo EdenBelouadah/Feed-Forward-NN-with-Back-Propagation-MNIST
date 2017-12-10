@@ -137,7 +137,14 @@ Afin de faire cette tâche, il a fallu implémenter ces fonctions:
 	\item BackPropagation: Rétropropagation de l'erreur sur le réseau à partir de la couche de sortie jusqu'à la première couche cachée et mise à jour des paramètres (W, B) du réseau,
 		$$\delta^{(l-1)}=f'^{(l-1)}(a^{(l-1)}) \circ (W^{(l)^t}\delta^{(l)})$$
 		
-		$$W^{(l)}=W^{(l)}-\eta_t \delta^{(l)} x^{(l)^t}$$		
+		$$W^{(l)}=W^{(l)}+reg^{(l)}-\eta_t \delta^{(l)} x^{(l)^t}$$
+		où $reg^{(l)}$ est le terme de régularisation et égale à :
+		\begin{itemize}
+			\item $0$ si la régularisation n'est pas utilisée,
+			\item $\lambda|W^{(l)}|$ dans le cas de la régularisation L1,
+			\item $\lambda{W^{(l)}}^2$ dans le cas de la régularisation L2,
+		\end{itemize}
+		avec $\lambda$ une constante scalaire.
 	\item Calcul d'erreur: Calculer l'erreur et la précision du réseau de neurones en comparant les sorties du réseau avec les vrais classes des exemples,
 	
 	$$c = - \sum_{(x_{i}, y_{i}) \in \mathcal{D}} \log P(y=y_{i}|x_{i},W,b)$$
