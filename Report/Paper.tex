@@ -141,8 +141,8 @@ Afin de faire cette tâche, il a fallu implémenter ces fonctions:
 		où $reg^{(l)}$ est le terme de régularisation égal à :
 		\begin{itemize}
 			\item $0$ si la régularisation n'est pas utilisée,
-			\item $\lambda|W^{(l)}|$ dans le cas de la régularisation L1,
-			\item $\lambda{W^{(l)}}^2$ dans le cas de la régularisation L2,
+			\item $\lambda \eta|W^{(l)}|$ dans le cas de la régularisation L1,
+			\item $\lambda \eta{||W^{(l)}||}^2$ dans le cas de la régularisation L2,
 		\end{itemize}
 		avec $\lambda$ un scalaire.
 	\item Calcul d'erreur: Calculer l'erreur et la précision du réseau de neurones en comparant les sorties du réseau avec les vrais classes des exemples,
