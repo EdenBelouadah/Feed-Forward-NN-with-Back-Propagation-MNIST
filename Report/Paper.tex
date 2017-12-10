@@ -184,7 +184,7 @@ L'architecture du réseau de neurones utilisée est la suivante:
 	\item Taille de Batch: 500.
 \end{itemize}
 
-L'instabilité numérique de la fonction $relu$ par rapport aux deux autres fonctions nous mène à adapter le taux d'apprentissage au fur et à mesure des itérations, En effet, $\eta$ est initialisé au début à 0.001 et  changera de valeur dynamiquement selon la valeur d'erreur qu'on cherche à optimiser. Si l'erreur diminue, on augmente le pas d'apprentissage par 20\%, et si elle augmente, on retourne aux valeurs précédentes de W et de B et on diminue le pas d'apprentissage par 20\%.
+L'instabilité numérique de la fonction $relu$ par rapport aux deux autres fonctions nous mène à adapter le taux d'apprentissage au fur et à mesure des itérations, En effet, $\eta$ qui représente le compromis entre l'exploitation et l'exploration, est initialisé au début à 0.001 et changera de valeur dynamiquement selon la valeur d'erreur qu'on cherche à optimiser. Si l'erreur diminue, on augmente le pas d'apprentissage par 20\%, et si elle augmente, on retourne aux valeurs précédentes de W et de B et on diminue le pas d'apprentissage par 20\%.
 
 \section{Analyse des résultats}
 Avec moins de 45 itérations et en un temps réduit, le réseau de neurones est capable d'atteindre une précision de 86\%. Cela n'empêche pas d'avoir un meilleure précision, mais le temps d'exécution augmentera en compliquant l'architecture du réseau. Les résultats sont les suivants:
@@ -209,29 +209,48 @@ Les courbes d'apprentissage sont les suivantes:
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}{0.45\textwidth}
-		\includegraphics[width=\textwidth]{Error}
+		\includegraphics[width=\textwidth]{error_mnist}
 		\caption{Erreur}
 	\end{subfigure}
 	\begin{subfigure}{0.45\textwidth}
-		\includegraphics[width=\textwidth]{accuracy}
+		\includegraphics[width=\textwidth]{accuracy_mnist}
 		\caption{Précision}
 	\end{subfigure}
-	\caption{Précision et erreur sur les ensembles d'apprentissage et de validation}
+	\caption{Précision et erreur sur les ensembles d'apprentissage et de validation de MNIST}
 \end{figure}
 
 Nous remarquons que l'erreur sur les ensembles d'apprentissage et de validation diminue efficacement au fil des itérations, puis commence à se stabiliser à la fin lorsque on se trouve dans un optimium local.
 
-Nous remarquons que même sans utiliser la régularisation, le modèle ne souffre pas de sur apprentissage, vu que la courbe d'erreur sur l'ensemble de validation ne diverge pas de celle de l'ensemble d'apprentissage.
+Nous remarquons que même sans utiliser la régularisation, le modèle ne souffre pas de sur apprentissage, vu que la courbe d'erreur sur l'ensemble de validation ne diverge pas de celle de l'ensemble d'apprentissage (L1 et L2 ont été testées mais les résultats sont presque les mêmes)
 
 Quant à la précision, nous remarquons qu'elle est en train d'augmenter pour les deux ensembles, jusqu'à ce qu'elle se stabilise aux dernières itérations.
 
+\section{Exécution sur la Base de données Cifar 10}
+Le programme a été testé aussi sur la base de données $Cifar10$ qui est plus difficile(3072 features au lieu de 784). L'architecture testée est 2 couches cachées avec respectivement 1024 et 512 neurones, fonction d'activation $relu$. Les résultats pour 20 itérations sont les suivants:
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\textwidth]{error_cifar10}
+		\caption{Erreur}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\textwidth]{accuracy_cifar10}
+		\caption{Précision}
+	\end{subfigure}
+	\caption{Précision et erreur sur les ensembles d'apprentissage et de validation de Cifar10}
+\end{figure}
+
+Nous remarquons pour la courbe de précision que cette dernière est en train d'augmenter et atteint la valeur 32.92\%. L'erreur est en train de diminuer et elle rencontre des perturbations à la fin des itérations. 
+
+La difficulté d'apprendre une telle base de données est visible. Le temps d'exécution est élevé en le comparant de celui de MNIST, et le réglage de paramètres nécessite plus de tests afin de diminuer l'erreur et augmenter la précision. 
 
 \section{Conclusion}
 Ce travail pratique était une occasion pour voir de plus proche le fonctionnement des réseaux de neurones. Ces derniers peuvent changer d'architecture en variant le type du problème, sa difficulté, ses particularités... 
 
 La base de données MNIST représente une tâche de classification simple qui peut être résolue avec un réseau de neurone simple, même sans couches cachées, comme nous l'avons vu dans le travail pratique précédent. En effet, il était possible d'atteindre une précision de 87\% facilement et en un peu de temps.
 
-Les architectures complexes sont plus adaptées aux problèmes complexes qui nécessitent vraiment un réseau profond, c'est la raison pour laquelle on s'est contenté d'une seule couche cachée dans ce travail.
+Les architectures complexes sont plus adaptées aux problèmes complexes, comme Cifar10, qui nécessitent vraiment un réseau profond, c'est la raison pour laquelle on s'est contenté d'une seule couche cachée dans ce travail pour la base de données MNIST.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \bibliographystyle{babplain}
 \parskip=-1em
