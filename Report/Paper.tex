@@ -116,7 +116,7 @@ Le domaine d'apprentissage profond est l'un des domaines les plus récents qui s
 
 Le but de ce travail pratique est de mettre en œuvre un réseau de neurones Feed Forward avec la rétropropagation de l'erreur, et de l'appliquer sur la base de données MNIST.
 
-La base de données MNIST est contruite de 50000 exemples d'images binaires numérisées. Chaque image contient un chiffre manuscrit et le but du réseau est d'associer l'image au bon chiffre correspondant parmi 10. 
+L'ensemble d'apprentissage de la base de données MNIST est contruit de 50000 exemples d'images binaires numérisées. Chaque image contient un chiffre manuscrit et le but du réseau est d'associer l'image au bon chiffre correspondant parmi 10. 
 
 \section{Apprentissage du réseau de neurones}
 Afin de faire cette tâche, il a fallu implémenter ces fonctions:
@@ -138,7 +138,7 @@ Afin de faire cette tâche, il a fallu implémenter ces fonctions:
 		$$\delta^{(l-1)}=f'^{(l-1)}(a^{(l-1)}) \circ (W^{(l)^t}\delta^{(l)})$$
 		
 		$$W^{(l)}=W^{(l)}+reg^{(l)}-\eta_t \delta^{(l)} x^{(l)^t}$$
-		où $reg^{(l)}$ est le terme de régularisation et égale à :
+		où $reg^{(l)}$ est le terme de régularisation égal à :
 		\begin{itemize}
 			\item $0$ si la régularisation n'est pas utilisée,
 			\item $\lambda|W^{(l)}|$ dans le cas de la régularisation L1,
@@ -178,7 +178,7 @@ L'architecture du réseau de neurones utilisée est la suivante:
 	\item Nombre de couches cachées: 1,
 	\item Nombre de neurones dans la couche cachée: 300,
 	\item Fonction d'activation : ReLU,
-	\item Erreur: Quadratique,
+	\item Erreur: Entropie-croisée,
 	\item Taille de Batch: 500.
 \end{itemize}
 
