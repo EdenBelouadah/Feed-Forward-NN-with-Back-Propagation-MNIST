@@ -186,7 +186,7 @@ L'architecture du réseau de neurones utilisée est la suivante:
 
 L'instabilité numérique de la fonction $relu$ par rapport aux deux autres fonctions nous mène à adapter le taux d'apprentissage au fur et à mesure des itérations, En effet, $\eta$ qui représente le compromis entre l'exploitation et l'exploration, est initialisé au début à 0.001 et changera de valeur dynamiquement selon la valeur d'erreur qu'on cherche à optimiser. Si l'erreur diminue, on augmente le pas d'apprentissage par 20\%, et si elle augmente, on retourne aux valeurs précédentes de W et de B et on diminue le pas d'apprentissage par 20\%.
 
-Les techniques de régularisation mises en œuvre sont L1, L2 (expliquées ci-haut) et le drop out qui permet de désactiver certains neurones (choisis aléatoirement) pendant l'étape d'apprentissage.
+Les techniques de régularisation mises en œuvre sont L1, L2 (expliquées ci-haut) et le dropout qui permet de désactiver certains neurones (choisis aléatoirement) pendant l'étape d'apprentissage.
 
 \section{Analyse des résultats}
 Avec moins de 45 itérations et en un temps réduit, le réseau de neurones est capable d'atteindre une précision de 88\%. Cela n'empêche pas d'avoir un meilleure précision, mais le temps d'exécution augmentera en compliquant l'architecture du réseau. Les résultats sont les suivants:
@@ -221,9 +221,9 @@ Les courbes d'apprentissage sont les suivantes:
 	\caption{Précision et erreur sur les ensembles d'apprentissage et de validation de MNIST}
 \end{figure}
 
-Nous remarquons que l'erreur sur les ensembles d'apprentissage et de validation diminue efficacement au fil des itérations, puis commence à se stabiliser à la fin lorsque on se trouve dans un optimium local.
+Nous remarquons que l'erreur sur les ensembles d'apprentissage et de validation diminue efficacement au fil des itérations, puis commence à se stabiliser à la fin lorsqu'on se trouve dans un optimium local.
 
-Nous remarquons que même sans utiliser la régularisation, le modèle ne souffre pas de sur apprentissage, vu que la courbe d'erreur sur l'ensemble de validation ne diverge pas de celle de l'ensemble d'apprentissage (L1 et L2 et aussi le drop out ont été testés mais les résultats sont presque les mêmes).
+Nous remarquons que même sans utiliser la régularisation, le modèle ne souffre pas de sur apprentissage, vu que la courbe d'erreur sur l'ensemble de validation ne diverge pas de celle de l'ensemble d'apprentissage (L1 et L2 et aussi le dropout ont été testés mais les résultats sont presque les mêmes).
 
 Quant à la précision, nous remarquons qu'elle est en train d'augmenter pour les deux ensembles, jusqu'à ce qu'elle se stabilise aux dernières itérations.
 
